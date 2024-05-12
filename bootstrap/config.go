@@ -36,7 +36,7 @@ func InitializeConfig() *viper.Viper {
         }
 		
     })
-	
+	//啓動
     // 将配置赋值给全局变量
     if err := v.Unmarshal(&global.App.Config); err != nil {
        fmt.Println(err)
