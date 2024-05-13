@@ -7,4 +7,14 @@ type Configuration struct {
     // Database Database `mapstructure:"database" json:"database" yaml:"database"`
     Jwt Jwt `mapstructure:"jwt" json:"jwt" yaml:"jwt"`
     MongoDB MongoDB `mapstructure:"mongodb" json:"mongodb" yaml:"mongodb"`
+    JsonRpc JsonRpc `mapstructure:"jsonrpc" json:"jsonrpc" yaml:"jsonrpc"`
 }
+
+//json rpc config
+type JsonRpc struct {
+    Host string `mapstructure:"host" json:"host" yaml:"host"`
+    Port string `mapstructure:"port" json:"port" yaml:"port"`
+}
+
+
+

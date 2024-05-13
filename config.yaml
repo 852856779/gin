@@ -12,3 +12,7 @@ mongodb:
   host: mongodb
   user: root
   password: 123456
+
+jsonrpc:
+  host: localhost
+  port: 3233
