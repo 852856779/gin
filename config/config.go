@@ -8,6 +8,7 @@ type Configuration struct {
     Jwt Jwt `mapstructure:"jwt" json:"jwt" yaml:"jwt"`
     MongoDB MongoDB `mapstructure:"mongodb" json:"mongodb" yaml:"mongodb"`
     JsonRpc JsonRpc `mapstructure:"jsonrpc" json:"jsonrpc" yaml:"jsonrpc"`
+    ElasticSearch ElasticSearch `mapstructure:"elasticsearch" json:"elasticsearch" yaml:"elasticsearch"`
 }
 
 //json rpc config
@@ -16,5 +17,9 @@ type JsonRpc struct {
     Port string `mapstructure:"port" json:"port" yaml:"port"`
 }
 
+//elasticsearch config
+type ElasticSearch struct {
+    Host string `mapstructure:"host" json:"host" yaml:"host"`
+}
 
 

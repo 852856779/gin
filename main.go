@@ -28,6 +28,7 @@ func main() {
     // })
 	r.POST("/auth/login", app.Login)
 	r.POST("/mongodb/test", app.MongodbTest)
+	r.POST("/elasticsearch/test", app.ElasticSearchTest)
 	fmt.Println(global.App.Config.App.Port);
     // 启动服务器
 	// a := 1;

@@ -11,7 +11,7 @@ import (
 
    
    func JsonRpcConnect(){
-	s, _ := go_jsonrpc.NewServer("http", App.Config.App.Port, "3345")
+	s, _ := go_jsonrpc.NewServer("http", global.App.Config.JsonRpc.Host, "3345")
 	s.Register(new(services.Go))
 	go func() {  
 		s.Start()

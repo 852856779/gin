@@ -16,3 +16,19 @@ mongodb:
 jsonrpc:
   host: localhost
   port: 3233
+
+elasticsearch:
+  host: 192.168.31.232:9200
+
+redis:
+  host:
+  port:
+
+kafuka:
+  host:
+  port:
+
+mq:
+  host:
+  port:
+
