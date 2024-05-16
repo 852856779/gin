@@ -2,6 +2,8 @@ package services
 
 import (
     "testproject/app/models"
+    "fmt"
+    "strconv"
 )
 
 type userService struct {
@@ -17,6 +19,77 @@ var UserService = new(userService)
 //     return
 // }
 
-func (userService *userService) Login() (user *models.User) {
-	return
+func (userService *userService) Login(config map[string]interface{}) (int,error) {
+    fmt.Println(222);
+    // models.User.UserName = "无敌王欣宇宙";
+    // models.User.IsDelete = 1;
+    userData := models.User{
+        UserName:config["userName"].(string),
+        Email:config["email"].(string),
+    }
+    // user.UserName = "无敌王欣宇宙";
+    // fmt.Println(models.User.UserName);
+    // fmt.Println(userInfo)
+    err,id := models.UserModel.Insert(userData);
+    fmt.Println(id)
+    return id,err
 }
+
+func (userService *userService) Update(config map[string]interface{}) models.User{
+    // fmt.Println(222);
+    // models.User.UserName = "无敌王欣宇宙";
+    // models.User.IsDelete = 1;
+    // userData := models.User{
+    //     UserName:config["userName"].(string),
+    //     Email:config["email"].(string),
+    // }
+    // user.UserName = "无敌王欣宇宙";
+    // fmt.Println(models.User.UserName);
+    // fmt.Println(userInfo)
+    // id := int(config["id"]);
+    fmt.Println()
+    id,err := strconv.Atoi(config["id"].(string));
+    fmt.Println(err)
+    if err != nil{
+
+    }
+    userData := models.User{
+        Id :id,
+        UserName:config["userName"].(string),
+        Email:config["email"].(string),
+    }
+    fmt.Println(userData)
+    userInfo := models.UserModel.Update(userData);
+    return userInfo;
+    // return id,err
+}
+
+func (userService *userService) Select() []models.User{
+    // fmt.Println(222);
+    // models.User.UserName = "无敌王欣宇宙";
+    // models.User.IsDelete = 1;
+    // userData := models.User{
+    //     UserName:config["userName"].(string),
+    //     Email:config["email"].(string),
+    // }
+    // user.UserName = "无敌王欣宇宙";
+    // fmt.Println(models.User.UserName);
+    // fmt.Println(userInfo)
+    // id := int(config["id"]);
+    // fmt.Println()
+    // id,err := strconv.Atoi(config["id"].(string));
+    // fmt.Println(err)
+    // if err != nil{
+
+    // }
+    // userData := models.User{
+    //     Id :id,
+    //     UserName:config["userName"].(string),
+    //     Email:config["email"].(string),
+    // }
+    // fmt.Println(userData)
+    userList := models.UserModel.Select();
+    return userList;
+    // return id,err
+}
+

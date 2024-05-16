@@ -15,10 +15,19 @@ func init(){
 	
 	bootstrap.InitializeConfig()
 	bootstrap.JsonRpcConnect()
+
 }
 
 func main() {
     r := gin.Default()
+	global.App.DB = bootstrap.InitializeDB()
+	// 程序关闭前，释放数据库连接
+	defer func() {
+	if global.App.DB != nil {
+		db, _ := global.App.DB.DB()
+		db.Close()
+	}
+	}()
     // 测试路由
     r.GET("/ping", func(c *gin.Context) {
         c.String(http.StatusOK, "pong")

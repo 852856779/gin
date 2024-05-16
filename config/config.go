@@ -9,6 +9,7 @@ type Configuration struct {
     MongoDB MongoDB `mapstructure:"mongodb" json:"mongodb" yaml:"mongodb"`
     JsonRpc JsonRpc `mapstructure:"jsonrpc" json:"jsonrpc" yaml:"jsonrpc"`
     ElasticSearch ElasticSearch `mapstructure:"elasticsearch" json:"elasticsearch" yaml:"elasticsearch"`
+    Database Database `mapstructure:"database" json:"database" yaml:"database"`
 }
 
 //json rpc config

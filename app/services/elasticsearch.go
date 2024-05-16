@@ -7,6 +7,7 @@ import (
     "github.com/olivere/elastic/v7"
 	"log"
 	"context"
+	"encoding/json"
 	// "strconv"
 )
 
@@ -94,5 +95,48 @@ func (elasticSearchService *elasticSearchService) Insert(indexName string,data [
 	
 }
 	return nil;
+}
+
+
+//模糊查询数据
+func (elasticSearchService *elasticSearchService) Query() [] any {
+    // defer func() {
+    //     if r := recover(); r != nil {
+    //         fmt.Println("Recovered in f", r)
+    //         c.String(200, "Query Error")
+    //     }
+    // }()
+    //模糊查询操作
+    query := elastic.NewMatchQuery("name", "Jane Doe")  //Title中包含 手机 的数据
+    searchResult, err := elasticSearchService.EsClient.Search().
+        Index("test").          // search in index "goods"
+        Query(query).            // specify the query
+        Do(context.Background()) // execute
+    if err != nil {
+        // Handle error
+        panic(err)
+    }
+	fmt.Println(searchResult)
+   // 遍历并打印结果  
+   a := 1;
+   var data[] any
+   for _, hit := range searchResult.Hits.Hits {  
+	// 打印文档ID
+	var user map[string]interface{}
+	if err := json.Unmarshal(hit.Source, &user); err != nil {
+		// handle error
+	} 
+	data = append(data, hit.Source) 
+	a++
+	// fmt.Println(hit)  
+} 
+// fmt.Println(a)
+// fmt.Println(data)
+
+return data;
+    // goods := models.Goods{}
+    // c.JSON(200, gin.H{
+    //     "searchResult": searchResult.Each(reflect.TypeOf(goods)), //查询的结果:reflect.TypeOf(goods)类型断言,可以判断是否商品结构体
+    // })
 }
 

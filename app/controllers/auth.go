@@ -5,32 +5,37 @@ import (
     // "testproject/app/common/request"
     "testproject/app/common/response"
     "testproject/app/services"
+    "fmt"
+    "encoding/json"
 )
+// type user struct{
 
+// }
 func Login(c *gin.Context) {
-    // var form request.Login
-    // if err := c.ShouldBindJSON(&form); err != nil {
-    //     response.ValidateFail(c, request.GetErrorMsg(form, err))
-    //     return
-    // }
-
-    // if err, user := services.UserService.Login(form); err != nil {
-    //     response.BusinessFail(c, err.Error())
-    // } else {
-    //     tokenData, err, _ := services.JwtService.CreateToken(services.AppGuardName, user)
-    //     if err != nil {
-    //         response.BusinessFail(c, err.Error())
-    //         return
-    //     }
-    //     response.Success(c, tokenData)
-    // }
-
+    fmt.Println(222222);
+    fmt.Println(c.PostForm("identifier"));
+    data := c.PostForm("identifier");
+    // param := make(map[string]interface{})
+    // err := c.ShouldBindJSON(&user)
+	var config map[string]interface{}
+	err := json.Unmarshal([]byte(data), &config)
+    // c.ShouldBindJSON(&data)
+    fmt.Println(data);
+    fmt.Println(33333);
+    fmt.Println(err);
+    fmt.Println(config["userName"]);
 	// tokenData, err, _ := services.JwtService.CreateToken(services.AppGuardName, services.PhpSyncGinService)
-	tokenData := services.PhpSyncGinService.GetSyncToken();
+	
     // services.MongoDBService.TestMongoDB();
 	// if err != nil {
     //     response.Success(c, err.Error())
     //     return
     // }
-    response.Success(c, tokenData)
+    // services.UserService.Login(config);
+    // updatedUser := services.UserService.Update(config);
+    // fmt.Println(updatedUser);
+    userList := services.UserService.Select();
+    response.Success(c, userList)
+    // tokenData := services.PhpSyncGinService.GetSyncToken();
+    // response.Success(c, tokenData)
 }
