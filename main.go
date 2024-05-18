@@ -15,12 +15,15 @@ func init(){
 	
 	bootstrap.InitializeConfig()
 	bootstrap.JsonRpcConnect()
+	
 
 }
 
 func main() {
     r := gin.Default()
 	global.App.DB = bootstrap.InitializeDB()
+	//消费是一个阻塞所以需要使用协程
+	go bootstrap.InitializeConsumer()
 	// 程序关闭前，释放数据库连接
 	defer func() {
 	if global.App.DB != nil {

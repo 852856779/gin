@@ -65,31 +65,35 @@ func (userService *userService) Update(config map[string]interface{}) models.Use
 }
 
 func (userService *userService) Select() []models.User{
-    // fmt.Println(222);
-    // models.User.UserName = "无敌王欣宇宙";
-    // models.User.IsDelete = 1;
-    // userData := models.User{
-    //     UserName:config["userName"].(string),
-    //     Email:config["email"].(string),
-    // }
-    // user.UserName = "无敌王欣宇宙";
-    // fmt.Println(models.User.UserName);
-    // fmt.Println(userInfo)
-    // id := int(config["id"]);
-    // fmt.Println()
+    userList := models.UserModel.Select();
+    return userList;
+    // return id,err
+}
+
+func (userService *userService) Delete(config map[string]interface{}) error{
     // id,err := strconv.Atoi(config["id"].(string));
     // fmt.Println(err)
     // if err != nil{
 
     // }
-    // userData := models.User{
-    //     Id :id,
-    //     UserName:config["userName"].(string),
-    //     Email:config["email"].(string),
-    // }
-    // fmt.Println(userData)
-    userList := models.UserModel.Select();
+    userData := models.User{
+        UserName:config["userName"].(string),
+    }
+    fmt.Println(userData);
+    userList := models.UserModel.Delete(userData);
     return userList;
+    // return id,err
+}
+
+func (userService *userService) Joins() error{
+    models.UserModel.Joins();
+    return nil;
+    // return id,err
+}
+
+func (userService *userService) SelectOne() error{
+    models.UserModel.SelectOne();
+    return nil;
     // return id,err
 }
 

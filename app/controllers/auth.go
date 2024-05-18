@@ -31,11 +31,13 @@ func Login(c *gin.Context) {
     //     response.Success(c, err.Error())
     //     return
     // }
-    // services.UserService.Login(config);
+    // _,cs := services.UserService.Login(config);
     // updatedUser := services.UserService.Update(config);
     // fmt.Println(updatedUser);
-    userList := services.UserService.Select();
-    response.Success(c, userList)
+    // userList := services.UserService.Select();
+   // userList := services.UserService.Delete(config);
+   services.UserService.SelectOne();
+    response.Success(c, 1)
     // tokenData := services.PhpSyncGinService.GetSyncToken();
     // response.Success(c, tokenData)
 }

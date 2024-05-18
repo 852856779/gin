@@ -6,6 +6,8 @@ import (
     // "testproject/app/common/request"
     "testproject/app/common/response"
     "testproject/app/services"
+	"fmt"
+	"encoding/json"
 )
 
 
@@ -41,7 +43,20 @@ func ElasticSearchTest(c *gin.Context) {
 	// 	},   
      
 	// }  
-	// services.ElasticSearchService.Insert("test3",docs);	
-	data := services.ElasticSearchService.Query();			
+	// 
+	// go services.SyncKakfaService.Consumer()
+	
+	// 将map转换为JSON字节数组  
+
+	data := services.ElasticSearchService.Query();	
+	jsonBytes, err := json.Marshal(data)  
+	if err != nil {  
+		fmt.Println("Error marshalling:", err)  
+		return  
+	}  
+	jsonStr := string(jsonBytes)  
+	services.SyncKakfaService.Producer(jsonStr)
+	fmt.Println(data);
+	fmt.Println(jsonStr);
 	response.Success(c, data);
 }
