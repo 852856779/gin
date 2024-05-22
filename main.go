@@ -41,6 +41,8 @@ func main() {
 	r.POST("/auth/login", app.Login)
 	r.POST("/mongodb/test", app.MongodbTest)
 	r.POST("/elasticsearch/test", app.ElasticSearchTest)
+	r.POST("/goroutines/test", app.GoroutinesTest)
+	r.POST("/context/test", app.ContextTest)
 	fmt.Println(global.App.Config.App.Port);
     // 启动服务器
 	// a := 1;
@@ -53,3 +55,8 @@ func main() {
 	// fmt.Println(*a);
     r.Run(":" + global.App.Config.App.Port)
 }
+
+
+// func main() {
+// 	fmt.Println("tes111");
+// }
