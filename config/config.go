@@ -1,6 +1,6 @@
 package config
 
-//jwt config
+//jwt config s
 type Configuration struct {
     App App `mapstructure:"app" json:"app" yaml:"app"`
     // Log Log `mapstructure:"log" json:"log" yaml:"log"`
