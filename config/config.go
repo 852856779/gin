@@ -10,6 +10,7 @@ type Configuration struct {
     JsonRpc JsonRpc `mapstructure:"jsonrpc" json:"jsonrpc" yaml:"jsonrpc"`
     ElasticSearch ElasticSearch `mapstructure:"elasticsearch" json:"elasticsearch" yaml:"elasticsearch"`
     Database Database `mapstructure:"database" json:"database" yaml:"database"`
+    Redis Redis `mapstructure:"redis" json:"Redis" yaml:"Redis"`
 }
 
 //json rpc config
@@ -21,6 +22,14 @@ type JsonRpc struct {
 //elasticsearch config
 type ElasticSearch struct {
     Host string `mapstructure:"host" json:"host" yaml:"host"`
+}
+
+//elasticsearch config
+type Redis struct {
+    Host string `mapstructure:"host" json:"host" yaml:"host"`
+    Port string `mapstructure:"host" json:"host" yaml:"host"`
+    Password string `mapstructure:"password" json:"password" yaml:"password"`
+    DB int `mapstructure:"db" json:"db" yaml:"db"`
 }
 
 

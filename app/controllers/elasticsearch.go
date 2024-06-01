@@ -55,7 +55,7 @@ func ElasticSearchTest(c *gin.Context) {
 		return  
 	}  
 	jsonStr := string(jsonBytes)  
-	services.SyncKakfaService.Producer(jsonStr)
+	services.SyncKakfaService.Producer(jsonStr,"sun")
 	fmt.Println(data);
 	fmt.Println(jsonStr);
 	response.Success(c, data);

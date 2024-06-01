@@ -22,6 +22,8 @@ func init(){
 func main() {
     r := gin.Default()
 	global.App.DB = bootstrap.InitializeDB()
+	global.App.Redis = bootstrap.InitializeRedis()
+	global.App.RedisClusterClient = bootstrap.InitializeRedisCluster()
 	//消费是一个阻塞所以需要使用协程
 	go bootstrap.InitializeConsumer()
 	// 程序关闭前，释放数据库连接
@@ -43,6 +45,9 @@ func main() {
 	r.POST("/elasticsearch/test", app.ElasticSearchTest)
 	r.POST("/goroutines/test", app.GoroutinesTest)
 	r.POST("/context/test", app.ContextTest)
+	r.POST("/redis/test", app.TestRedis)
+	r.POST("/redis/testCluster", app.TestRedisCluster)
+	
 	fmt.Println(global.App.Config.App.Port);
     // 启动服务器
 	// a := 1;

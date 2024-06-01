@@ -22,7 +22,7 @@ var addrs = []string{"192.168.31.232:9092"}
 // var Topic = []string{"sun", "topic2", "topic3"} 
 var Topic = "sun";
 
-func (synckakfaService *synckakfaService) Producer(jsonData string ) {
+func (synckakfaService *synckakfaService) Producer(jsonData string ,topic string) {
     //    生产者配置
     config := sarama.NewConfig()
     config.Producer.RequiredAcks = sarama.WaitForAll          // ACK
@@ -49,7 +49,7 @@ func (synckakfaService *synckakfaService) Producer(jsonData string ) {
 
     // 封装消息
     msg := &sarama.ProducerMessage{
-        Topic: Topic,
+        Topic: topic,
         Value: sarama.StringEncoder(jsonData),
     }
 	client.Input() <- msg   //异步发送消息
@@ -115,7 +115,6 @@ func (synckakfaService *synckakfaService) SimpleConsumer() {
         // signal.Notify(quit, syscall.SIGHUP, syscall.SIGINT, syscall.SIGTERM, syscall.SIGQUIT)
         // <-quit
         logger.Println("stop consumer")
-        // defer consumer.close();
         //cancelFunc()
         //wg.Done()
     }()
