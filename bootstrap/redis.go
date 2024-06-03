@@ -33,12 +33,12 @@ func InitializeRedis() *redis.Client {
 }
 var redisCluster *redis.ClusterClient
 var redisClusterUrl []string = []string{
-	"192.168.31.232:6380",
-	"192.168.31.232:6381",
-	"192.168.31.232:6382",
-	"192.168.31.232:6383",
-	"192.168.31.232:6384",
-	"192.168.31.232:6385",
+	"192.168.31.110:6380",
+	"192.168.31.110:6381",
+	"192.168.31.110:6382",
+	"192.168.31.110:6383",
+	"192.168.31.110:6384",
+	"192.168.31.110:6385",
 }
 //连接redis集群
 func InitializeRedisCluster() *redis.ClusterClient {

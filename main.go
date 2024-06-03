@@ -26,6 +26,7 @@ func main() {
 	global.App.RedisClusterClient = bootstrap.InitializeRedisCluster()
 	//消费是一个阻塞所以需要使用协程
 	go bootstrap.InitializeConsumer()
+	go bootstrap.InitializekafkaGroup()
 	// 程序关闭前，释放数据库连接
 	defer func() {
 	if global.App.DB != nil {
@@ -47,6 +48,7 @@ func main() {
 	r.POST("/context/test", app.ContextTest)
 	r.POST("/redis/test", app.TestRedis)
 	r.POST("/redis/testCluster", app.TestRedisCluster)
+	r.POST("/redis/tesMqRedisData", app.TestMqRedisData)
 	
 	fmt.Println(global.App.Config.App.Port);
     // 启动服务器

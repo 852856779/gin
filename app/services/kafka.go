@@ -18,7 +18,7 @@ type synckakfaService struct{}
 var SyncKakfaService = new(synckakfaService)
 // 更多参考:https://kpretty.tech/archives/gokafkaclient
 
-var addrs = []string{"192.168.31.232:9092"}
+var addrs = []string{"192.168.31.110:9092"}
 // var Topic = []string{"sun", "topic2", "topic3"} 
 var Topic = "sun";
 
@@ -60,6 +60,40 @@ func (synckakfaService *synckakfaService) Producer(jsonData string ,topic string
     // }
 
     //fmt.Printf("pid:%v offset:%v \n", pid, offset)
+}
+
+
+func (synckakfaService *synckakfaService) ProducerSync(msg sarama.ProducerMessage) error {
+    //    生产者配置
+    config := sarama.NewConfig()
+    config.Producer.RequiredAcks = sarama.WaitForAll          // ACK
+    config.Producer.Partitioner = sarama.NewRandomPartitioner // 分区
+    // 异步回调(两个channel, 分别是成功和错误)
+    config.Producer.Return.Successes = true // 确认
+    config.Producer.Return.Errors = true
+
+    sarama.Logger = log.New(os.Stdout, "[Sarama]", log.LstdFlags)
+
+    // 连接kafka
+    // 同步
+    client, err := sarama.NewSyncProducer(addrs, config)
+    if err != nil {
+        fmt.Println("producer error", err)
+        return err
+    }
+
+    defer func() {
+        _ = client.Close()
+    }()
+
+    pid, offset, err := client.SendMessage(&msg)
+    if err != nil {
+        fmt.Println("send failed", err)
+        return err
+    }
+
+    fmt.Printf("pid:%v offset:%v \n", pid, offset)
+    return err
 }
 
 func groupConsumer() {

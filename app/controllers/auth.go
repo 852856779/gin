@@ -6,11 +6,14 @@ import (
     "testproject/app/common/response"
     "testproject/app/services"
     "testproject/app/models"
+    "testproject/bootstrap"
     "fmt"
     "testproject/global"
     "encoding/json"
     "context"
     "time"
+    "github.com/IBM/sarama"
+    "strconv"
 )
 // type user struct{
 
@@ -84,7 +87,7 @@ func TestRedisCluster(c *gin.Context) {
     db := global.App.DB
     ctx := context.Background()
     userId := 2003;
-    userIdKey := "userId:"+string(userId)
+    userIdKey := "userId:"+strconv.Itoa(userId)
     redis := global.App.RedisClusterClient
     fmt.Println(redis);
     n, err := redis.Exists(ctx, userIdKey).Result()
@@ -116,12 +119,25 @@ func TestMqRedisData(c *gin.Context) {
     ctx := context.Background()
     redis := global.App.RedisClusterClient
     userId := 2003;
-    userIdKey := "userId:"+string(userId)
+    userIdKey := "userId:"+strconv.Itoa(userId)
     //先删除缓存
     redis.Del(ctx, userIdKey)
     //对数据进行更新操作
     user := models.User{Id:userId,UserName:"无敌王宇",Email:"test@xxx.com"}
     db.Save(&user)
     //使用延迟队列进行第二次删除 时间根据业务场景而定
-    services.SyncKakfaService.Producer(userIdKey,"redisKeyDel")
+    // fmt.Println(sarama.StringEncoder(userIdKey))
+	// jsonBytes, _ := json.Marshal(userIdKey)  
+    bootstrap.DelayTime = time.Minute * 1
+    kafkaDelayQueue := bootstrap.GetKafkaDelayQueue()
+    // fmt.Println(kafkaDelayQueue)
+    msg := &sarama.ProducerMessage{
+		Topic:     bootstrap.RealTopic,
+		Timestamp: time.Now(),
+		// Key:       sarama.StringEncoder("rta_key"),
+		Value:     sarama.StringEncoder(userIdKey),
+	}
+    // fmt.Println(bootstrap.DelayTime)
+    kafkaDelayQueue.SendMessage(msg)
+    // services.SyncKakfaService.Producer(userIdKey,"redisKeyDel")
 }

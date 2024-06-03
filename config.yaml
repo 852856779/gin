@@ -9,7 +9,7 @@ database:
   host: db # 域名
   port: 3306 # 端口号
   database: gin_test # 数据库名称
-  username: test # 用户名
+  username: guanshaoyu # 用户名
   password: 123456 # 密码
   charset: utf8mb4 # 编码格式
   max_idle_conns: 10 # 空闲连接池中连接的最大数量
@@ -32,7 +32,7 @@ jsonrpc:
   port: 3233
 
 elasticsearch:
-  host: 192.168.31.232:9200
+  host: es
 
 redis:
   host: redis
